@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+
+<odoo>
+  <data>
+    <template id="assets_backend" name="hr_attendance assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+          <t t-set="provider" t-value="request.env['base.geocoder'].sudo()._get_provider().tech_name" />
+          <t t-if="provider=='googlemap'">
+              <t t-set="google_api_key" t-value="request.env['ir.config_parameter'].sudo().get_param('base_geolocalize.google_map_api_key')"/>
+              <t t-if="google_api_key">
+                  <script type="text/javascript" t-attf-src="https://maps.google.com/maps/api/js?key=#{google_api_key}" />
+              </t>
+              <t t-else="1">
+                  <script type="text/javascript" src="//maps.google.com/maps/api/js" />
+              </t>
+              <script type="text/javascript" src="/employee_attendance_geolocations/static/src/lib/googlemarkerclusterer.js" ></script>
+              <script type="text/javascript" src="/employee_attendance_geolocations/static/src/js/my_attendances.js"></script>
+              <script type="text/javascript" src="/employee_attendance_geolocations/static/src/js/form_renderer.js"></script>
+          </t>
+
+        </xpath>
+    </template>
+  </data>
+</odoo>
